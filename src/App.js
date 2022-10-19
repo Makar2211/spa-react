@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import {Massege} from './Message/Message'
+import {Input} from './Message/input'
 
 function App() {
+  const arr = [
+    {id:1,  name: 'makar', age: 18},
+    {id:2, name: 'makar', age: 18},
+    {id:3,  name: 'makar', age: 18},
+  ]
+  const [peoples, setPeoples] = useState(arr)
+  const handelAge = () => {
+    setPeoples(peoples.filter((people) => people.age ++))
+  }
+  const Refresh = () => {
+    setPeoples(arr)
+  }
+  const handelDelete = (id) => {
+    setPeoples(peoples.filter((people) => people.id !== id))
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+
+    {peoples.map((people) => {
+     return <Massege
+      {...people}
+      key={people.id}
+      handelAge={handelAge}
+      handelDelete={handelDelete}
+      />
+    })}
+    <button onClick={Refresh}>refresh</button>
+
+    <Input/>
+   </>
   );
 }
 
